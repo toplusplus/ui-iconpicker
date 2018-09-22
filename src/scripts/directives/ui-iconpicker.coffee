@@ -44,7 +44,7 @@ umd this, (angular) ->
 	module.directive "uiIconpicker", [
 		"IconGroupCollection"
 		"$compile"
-		(IconGroupCollection) ->
+		(IconGroupCollection, $compile) ->
 			restrict: "A"
 			scope:
 				name  : "@"

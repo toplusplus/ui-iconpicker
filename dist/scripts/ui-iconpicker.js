@@ -162,7 +162,7 @@
     var module;
     module = angular.module("ui-iconpicker/directives/ui-iconpicker", ["ui-iconpicker/services/IconGroupCollection"]);
     return module.directive("uiIconpicker", [
-      "IconGroupCollection", "$compile", function(IconGroupCollection) {
+      "IconGroupCollection", "$compile", function(IconGroupCollection, $compile) {
         return {
           restrict: "A",
           scope: {
