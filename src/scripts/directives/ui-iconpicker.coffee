@@ -28,7 +28,6 @@ umd = (root, factory) ->
 		define("directives/ui-iconpicker", [
 			"angular"
 			"services/IconGroupCollection"
-			"templates/iconpicker"
 		], factory);
 
 	# Non-AMD
@@ -40,22 +39,24 @@ umd this, (angular) ->
 	# Register Angular Module
 	module = angular.module("ui-iconpicker/directives/ui-iconpicker", [
 		"ui-iconpicker/services/IconGroupCollection"
-		"ui-iconpicker/templates/iconpicker"
 	]);
 
 	module.directive "uiIconpicker", [
 		"IconGroupCollection"
+		"$compile"
 		(IconGroupCollection) ->
-			replace: true
-			restrict: "E"
+			restrict: "A"
 			scope:
 				name  : "@"
 				model : "=?ngModel"
-			templateUrl: "templates/iconpicker.html"
 			link: ($scope, $element, attrs) ->
 				$scope.availableIconClasses = (new IconGroupCollection(attrs.groups)).getClassArray();
-				$scope.iconClass = attrs.value ? $scope.availableIconClasses[0];
-				
+				$scope.iconClass = attrs.value;
+
+				template = "<ul class=\"dropdown-menu\" uib-dropdown-menu role=\"menu\">\n	<li ng-repeat=\"class in availableIconClasses\">\n		<button class=\"btn btn-default\" type=\"button\" ng-click=\"$parent.iconClass = class.slice(9)\">\n			<span class=\"{{ class }}\"></span>\n		</button>\n	</li>\n</ul>"
+				content = $compile(template)($scope);
+				$element.parent().append(content);
+
 				# setup two way bindings between $scope.iconClass and $scope.model
 				# when ng-model is found in the DOM attribute.
 				if attrs.ngModel
@@ -64,8 +65,6 @@ umd this, (angular) ->
 						$scope.model = $scope.iconClass;
 					$scope.$watch "model", ->
 						$scope.iconClass = $scope.model;
-
-				$scope.$dropdownButton = $element.find("button").eq(0);
 
 				$scope.disabled = attrs.disabled?;
 	]

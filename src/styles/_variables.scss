@@ -21,9 +21,11 @@
  * SOFTWARE.
  */
 
-@import "../components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/variables";
-@import "../components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/mixins";
-@import "../components/font-awesome/scss/variables";
+ $screen-sm-min: 768px;
+ $screen-sm-max: 991px;
+ $screen-md-min: 992px;
+ $screen-md-max: 1199px;
+ $screen-lg-min: 1200px;
 
 $iconpicker-dropdown-menu-padding-h: 0.5em !default;
 $iconpicker-dropdown-menu-padding-v: $iconpicker-dropdown-menu-padding-h !default;

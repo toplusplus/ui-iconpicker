@@ -1,21 +1,31 @@
 /**
+ * This is a twist of the Justin's project:
+ * https://github.com/justin-lau/ui-iconpicker
+ *
+ * I modyfied it in order to use it as an attribute directive for
+ * inputs elements.
+ *
+ * @toplusplus	toplusplus@gmail.com
+ *
+ * ...
+ *
  * ui-iconpicker
  *
  * @version   v0.1.4
  * @author    Justin Lau <justin@tclau.com>
  * @copyright Copyright (c) 2014 Justin Lau <justin@tclau.com>
  * @license   The MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -142,7 +152,7 @@
 
   umd = function(root, factory) {
     if (typeof define === "function" && (define.amd != null)) {
-      return define("templates/iconpicker", ["angular", "angular-bootstrap"], factory);
+      return define("directives/ui-iconpicker", ["angular", "services/IconGroupCollection"], factory);
     } else {
       return factory(root.angular);
     }
@@ -150,44 +160,22 @@
 
   umd(this, function(angular) {
     var module;
-    module = angular.module("ui-iconpicker/templates/iconpicker", ["ui.bootstrap"]);
-    return module.run([
-      "$templateCache", function($templateCache) {
-        return $templateCache.put("templates/iconpicker.html", "<span class=\"btn-group ui-iconpicker\" ng-class=\"{ disabled: disabled }\">\n	<button type=\"button\" class=\"btn btn-default dropdown-toggle\"><i class=\"{{ iconClass }}\"></i><span class=\"caret\"></span>\n	</button>\n	<ul class=\"dropdown-menu\" role=\"menu\">\n		<li ng-repeat=\"class in availableIconClasses\">\n			<button class=\"btn btn-default\" type=\"button\" ng-click=\"$parent.iconClass = class\"><span class=\"{{ class }}\"></span></button>\n		</li>\n	</ul>\n	<input name=\"{{ name }}\" type=\"hidden\" value=\"{{ iconClass }}\" ng-if=\"name\" />\n</span>");
-      }
-    ]);
-  });
-
-}).call(this);
-
-(function() {
-  var umd;
-
-  umd = function(root, factory) {
-    if (typeof define === "function" && (define.amd != null)) {
-      return define("directives/ui-iconpicker", ["angular", "services/IconGroupCollection", "templates/iconpicker"], factory);
-    } else {
-      return factory(root.angular);
-    }
-  };
-
-  umd(this, function(angular) {
-    var module;
-    module = angular.module("ui-iconpicker/directives/ui-iconpicker", ["ui-iconpicker/services/IconGroupCollection", "ui-iconpicker/templates/iconpicker"]);
+    module = angular.module("ui-iconpicker/directives/ui-iconpicker", ["ui-iconpicker/services/IconGroupCollection"]);
     return module.directive("uiIconpicker", [
-      "IconGroupCollection", function(IconGroupCollection) {
+      "IconGroupCollection", "$compile", function(IconGroupCollection) {
         return {
-          replace: true,
-          restrict: "E",
+          restrict: "A",
           scope: {
             name: "@",
             model: "=?ngModel"
           },
-          templateUrl: "templates/iconpicker.html",
           link: function($scope, $element, attrs) {
-            var _ref;
+            var content, template;
             $scope.availableIconClasses = (new IconGroupCollection(attrs.groups)).getClassArray();
-            $scope.iconClass = (_ref = attrs.value) != null ? _ref : $scope.availableIconClasses[0];
+            $scope.iconClass = attrs.value;
+            template = "<ul class=\"dropdown-menu\" uib-dropdown-menu role=\"menu\">\n	<li ng-repeat=\"class in availableIconClasses\">\n		<button class=\"btn btn-default\" type=\"button\" ng-click=\"$parent.iconClass = class.slice(9)\">\n			<span class=\"{{ class }}\"></span>\n		</button>\n	</li>\n</ul>";
+            content = $compile(template)($scope);
+            $element.parent().append(content);
             if (attrs.ngModel) {
               $scope.model = $scope[attrs.ngModel];
               $scope.$watch("iconClass", function() {
@@ -197,7 +185,6 @@
                 return $scope.iconClass = $scope.model;
               });
             }
-            $scope.$dropdownButton = $element.find("button").eq(0);
             return $scope.disabled = attrs.disabled != null;
           }
         };

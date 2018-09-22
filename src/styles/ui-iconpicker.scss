@@ -25,72 +25,23 @@
 
 .ui-iconpicker {
 
-	&.brand-default {
-		
-		> button {
-			@include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
-		}
-
-	}
-
-	&.brand-primary {
-		
-		> button {
-			@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
-		}
-
-	}
-
-	&.brand-success {
-		
-		> button {
-			@include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
-		}
-
-	}
-
-	&.brand-info {
-		
-		> button {
-			@include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
-		}
-
-	}
-
-	&.brand-warning {
-		
-		> button {
-			@include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
-		}
-
-	}
-
-	&.brand-danger {
-		
-		> button {
-			@include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
-		}
-
-	}
-
 	&.disabled,
 	&[disabled],
 	fieldset[disabled] & {
-		
+
 		> button {
 			cursor: not-allowed;
 			pointer-events: none; // Future-proof disabling of clicks
-			@include opacity(.65);
-			@include box-shadow(none);
+			opacity: 0.65;
+			box-shadow: none;
 		}
-		
-	}
 
+	}
 
 	> button > i {
 		padding-right: .5em;
 	}
-	
+
 	> ul.dropdown-menu {
 		max-height: 0.1em + ceil(2 * $iconpicker-dropdown-menu-padding-v + $iconpicker-rows-xs * ($iconpicker-button-height + 2 * $iconpicker-button-padding-v + 2 * $iconpicker-button-margin-v));
 		overflow-y: scroll;
@@ -109,16 +60,16 @@
 
 		@media (min-width: $screen-lg-min) {
 			max-height: 0.1em + ceil(2 * $iconpicker-dropdown-menu-padding-v + $iconpicker-rows-lg * ($iconpicker-button-height + 2 * $iconpicker-button-padding-v + 2 * $iconpicker-button-margin-v));
-			width: 0.1em + ceil(2 * $iconpicker-dropdown-menu-padding-h + $iconpicker-cols-lg * ($iconpicker-button-width + 2 * $iconpicker-button-padding-h + 2 * $iconpicker-button-margin-h));
+			width: 22.8;
 		}
 
 		&::-webkit-scrollbar {
-			width: 0.1em;
+			width: 2.7em;
 		}
 
 		> li {
 			float: left;
-	
+
 			button {
 				height  : $iconpicker-button-height;
 				margin  : $iconpicker-button-margin;
