@@ -60,11 +60,11 @@
 
 		@media (min-width: $screen-lg-min) {
 			max-height: 0.1em + ceil(2 * $iconpicker-dropdown-menu-padding-v + $iconpicker-rows-lg * ($iconpicker-button-height + 2 * $iconpicker-button-padding-v + 2 * $iconpicker-button-margin-v));
-			width: 22.8;
+			width: 22.8em;
 		}
 
 		&::-webkit-scrollbar {
-			width: 2.7em;
+			width: 0.1em;
 		}
 
 		> li {
@@ -74,7 +74,7 @@
 				height  : $iconpicker-button-height;
 				margin  : $iconpicker-button-margin;
 				padding : $iconpicker-button-padding;
-				width   : $iconpicker-button-width;
+				min-width   : 2.7em;
 			}
 
 		}

@@ -64,11 +64,11 @@
 @media (min-width: 1200px) {
   .ui-iconpicker > ul.dropdown-menu {
     max-height: 23.1em;
-    width: 22.8;
+    width: 22.8em;
   }
 }
 .ui-iconpicker > ul.dropdown-menu::-webkit-scrollbar {
-  width: 2.7em;
+  width: 0.1em;
 }
 .ui-iconpicker > ul.dropdown-menu > li {
   float: left;
@@ -77,5 +77,5 @@
   height: 2.5em;
   margin: 0.1em 0.1em;
   padding: 0 0;
-  width: 2.5em;
+  min-width: 2.7em;
 }
