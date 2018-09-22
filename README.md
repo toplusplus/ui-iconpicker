@@ -1,5 +1,5 @@
 # ui-iconpicker-input
-### A Bootstrap 3 - Icon Picker for AngularJS #
+### A Bootstrap 3 Font Awesome Icon Picker for AngularJS #
 
 This is a twist of the Justin's project: https://github.com/justin-lau/ui-iconpicker
 
